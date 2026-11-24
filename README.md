@@ -1,6 +1,6 @@
 # 🎓 E-Sentry Academy
 
-![Screenshot](docs/screenshot.png)
+![Four screens of the demo: dashboard, courses, quizzes, forum](docs/screenshot.jpg)
 
 _Screenshot of the forum in server mode (local run)._
 
@@ -47,7 +47,7 @@ E-Sentry Academy هي منصة تعليمية تفاعلية مصممة للطل
 
 ## 📸 Screenshots
 
-The screenshot at the top is the only image, taken from a local server-mode run. Other pages were not re-captured.
+The image at the top is a composite of four screens (dashboard, courses, quizzes, forum) from the demo. The admin and login pages are not shown.
 
 ---
 
