@@ -113,7 +113,7 @@ platform/
 ### Prerequisites
 
 - Modern web browser (Chrome, Firefox, Edge)
-- No server required - runs entirely client-side
+- The static demo needs no server (runs client-side). An optional local backend prototype is in `server/` (see below)
 
 ### Installation
 
@@ -126,6 +126,15 @@ cd platform
 # Or use a simple HTTP server:
 python -m http.server 8080
 ```
+
+### Optional: server mode (local prototype)
+Requires Node 22. From the `server/` folder:
+
+```bash
+ADMIN_EMAIL=you@example.com ADMIN_PASSWORD='at-least-12-chars' node --no-warnings server.js
+```
+
+Then open the address it prints. In this mode accounts, sessions, exam scoring and the forum go through the server API. Tests and the full list of limits are in `server/README.md`. This is a prototype, not production: likes, course progress and some admin tables stay in the browser.
 
 ### Development
 
