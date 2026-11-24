@@ -111,7 +111,7 @@ platform/
 
 ```bash
 # Clone the repository
-git clone https://github.com/mahamedwow1-afk/platform.git
+git clone https://github.com/mahamed-yasser/platform.git
 cd platform
 
 # Open index.html in your browser
@@ -185,7 +185,7 @@ No license file is included yet.
 **Mahamed Yasser**
 - Full-Stack Developer
 - Qalyubia, Egypt
-- [GitHub Profile](https://github.com/mahamedwow1-afk)
+- [GitHub Profile](https://github.com/mahamed-yasser)
 
 ---
 
@@ -200,7 +200,7 @@ No license file is included yet.
 
 <div align="center">
 
-Made with ❤️ by [Mahamed Yasser](https://github.com/mahamedwow1-afk)
+Made with ❤️ by [Mahamed Yasser](https://github.com/mahamed-yasser)
 
 </div>
 
@@ -218,3 +218,4 @@ What the demo does:
 - Client-side login throttling (5 failures, 30 s) and a Content-Security-Policy meta tag.
 
 What it cannot do (needs a real backend): server-side authentication and authorization, rate limiting that an attacker cannot reset, encrypted storage, audit logs, backups. Anyone with browser dev tools can edit local data.
+
