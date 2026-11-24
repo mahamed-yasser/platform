@@ -62,7 +62,7 @@ function renderExamsList() {
                         `
                         }
                     </div>
-                    <h3 class="text-lg font-bold text-slate-100 mb-2">${exam.title}</h3>
+                    <h3 class="text-lg font-bold text-slate-100 mb-2">${ESSec.esc(exam.title)}</h3>
                     <p class="text-xs text-slate-400 mb-4 leading-relaxed">اختبار إلكتروني تفاعلي يقيس استيعاب المفاهيم مع تصحيح فوري وتغذية راجعة كاملة للأسئلة.</p>
                     <div class="grid grid-cols-2 gap-2 text-xs text-slate-300 mb-6 bg-slate-900/60 p-3 rounded-xl border border-slate-800/80">
                         <div class="flex items-center gap-2">
@@ -300,7 +300,7 @@ function submitExam() {
     });
 
     ES_Storage.addNotification({
-        title: `إكمال اختبار "${currentExam.title}" بنسبة نجاح ${percentage}%`,
+        title: `إكمال اختبار "${ESSec.esc(currentExam.title)}" بنسبة نجاح ${percentage}%`,
         icon: percentage >= 60 ? "award" : "clock"
     });
 

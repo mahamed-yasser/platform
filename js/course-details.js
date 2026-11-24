@@ -17,13 +17,13 @@ function renderDetails(courseId) {
     if (header) {
         header.innerHTML = `
             <div class="flex flex-col md:flex-row gap-6 items-center">
-                <img src="${course.image}" onerror="this.src='https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=800&auto=format&fit=crop'" class="w-full md:w-48 h-32 object-cover object-center rounded-xl border border-slate-800">
+                <img src="${ESSec.esc(course.image)}" onerror="this.src='https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=800&auto=format&fit=crop'" class="w-full md:w-48 h-32 object-cover object-center rounded-xl border border-slate-800">
                 <div class="flex-1">
                     <div class="flex items-center gap-2 mb-2">
                         <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${isEnrolled ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-400'}">${isEnrolled ? 'مشترك' : 'غير مشترك'}</span>
                         <span class="text-xs text-slate-400"><i class="fas fa-clock ml-1 text-emerald-400"></i> ${course.duration}</span>
                     </div>
-                    <h1 class="text-2xl font-black text-slate-100 mb-2">${course.title}</h1>
+                    <h1 class="text-2xl font-black text-slate-100 mb-2">${ESSec.esc(course.title)}</h1>
                     <p class="text-xs text-slate-400 leading-relaxed mb-4">${course.description}</p>
                     ${!isEnrolled ? `
                         <button onclick="handleEnroll('${course.id}')" class="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold rounded-xl shadow-lg cursor-pointer transition">
@@ -41,9 +41,9 @@ function renderDetails(courseId) {
     if (!units || units.length === 0) {
         units = [
             {
-                title: `المحور الرئيسي: ${course.title}`,
+                title: `المحور الرئيسي: ${ESSec.esc(course.title)}`,
                 lessons: [
-                    { id: `${courseId}-1`, title: `مقدمة في ${course.title}`, duration: 15, completed: false },
+                    { id: `${courseId}-1`, title: `مقدمة في ${ESSec.esc(course.title)}`, duration: 15, completed: false },
                     { id: `${courseId}-2`, title: `التطبيقات العملية والممارسات الأمنية`, duration: 20, completed: false }
                 ]
             }
@@ -69,7 +69,7 @@ function renderDetails(courseId) {
             <div class="p-4 bg-slate-800/40 border-b border-slate-800 flex items-center justify-between">
                 <h3 class="text-sm font-bold text-emerald-400 flex items-center gap-2">
                     <span class="w-6 h-6 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xs">${uIdx + 1}</span>
-                    ${unit.title}
+                    ${ESSec.esc(unit.title)}
                 </h3>
             </div>
             <div class="divide-y divide-slate-800">
@@ -80,7 +80,7 @@ function renderDetails(courseId) {
                                 <span class="text-xs font-bold">${idx++}</span>
                             </div>
                             <div>
-                                <h4 class="text-sm font-bold text-slate-200 mb-0.5">${l.title}</h4>
+                                <h4 class="text-sm font-bold text-slate-200 mb-0.5">${ESSec.esc(l.title)}</h4>
                                 <span class="text-[11px] text-slate-400"><i class="fas fa-clock ml-1"></i> ${l.duration} دقيقة</span>
                             </div>
                         </div>

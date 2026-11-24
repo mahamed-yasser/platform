@@ -112,7 +112,7 @@ function renderCourseProgress() {
                                     <i class="fas ${lesson.completed ? "fa-check" : "fa-play"} text-xs"></i>
                                 </div>
                                 <div class="truncate">
-                                    <div class="text-xs font-semibold text-slate-200 truncate">${lesson.title}</div>
+                                    <div class="text-xs font-semibold text-slate-200 truncate">${ESSec.esc(lesson.title)}</div>
                                     <span class="text-[10px] text-slate-500">${lesson.duration || 0} دقيقة</span>
                                 </div>
                             </div>
@@ -154,7 +154,7 @@ function renderExamsSummary() {
                         <i class="fas ${isCompleted ? "fa-file-circle-check" : "fa-pen-to-square"} text-lg"></i>
                     </div>
                     <div>
-                        <h4 class="text-sm font-bold text-slate-100">${exam.title}</h4>
+                        <h4 class="text-sm font-bold text-slate-100">${ESSec.esc(exam.title)}</h4>
                         <div class="flex flex-wrap items-center gap-3 text-xs text-slate-400 mt-1">
                             <span><i class="far fa-clock ml-1 text-slate-500"></i>${exam.duration} دقيقة</span>
                             <span><i class="far fa-circle-question ml-1 text-slate-500"></i>${exam.totalQuestions} أسئلة</span>
@@ -206,7 +206,7 @@ function renderPendingAssignments() {
         <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800/80 flex items-center justify-between gap-3 hover:bg-slate-800/30 transition-colors">
             <div class="flex items-center gap-3 min-w-0">
                 <input type="checkbox" data-task-id="${task.id}" ${task.completed ? "checked" : ""} onchange="toggleTaskStatus(this)" class="w-4 h-4 rounded border-slate-700 bg-slate-800 text-emerald-500 focus:ring-emerald-500/20 cursor-pointer">
-                <span class="text-xs font-medium ${task.completed ? "line-through text-slate-500" : "text-slate-200"}">${task.title}</span>
+                <span class="text-xs font-medium ${task.completed ? "line-through text-slate-500" : "text-slate-200"}">${ESSec.esc(task.title)}</span>
             </div>
             <span class="text-[10px] shrink-0 ${task.completed ? "text-emerald-500 bg-emerald-950/40" : "text-amber-400 bg-amber-950/40"} px-2 py-0.5 rounded border ${task.completed ? "border-emerald-500/20" : "border-amber-500/20"}">
                 ${task.deadline}
@@ -316,7 +316,7 @@ function toggleTaskStatus(checkbox) {
     if (checkbox.checked) {
         showToast("أحسنت! تم إنجاز المهمة بنجاح 👏", "success");
         ES_Storage.addNotification({
-            title: `تم إنجاز الواجب: ${task.title}`,
+            title: `تم إنجاز الواجب: ${ESSec.esc(task.title)}`,
             icon: "award"
         });
     }

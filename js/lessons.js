@@ -111,7 +111,7 @@ function renderPlaylist(activeId) {
                 <i class="fas ${item.completed ? "fa-check" : "fa-play"} text-xs"></i>
             </div>
             <div class="min-w-0">
-                <div class="text-xs font-semibold text-slate-100 truncate">${item.title}</div>
+                <div class="text-xs font-semibold text-slate-100 truncate">${ESSec.esc(item.title)}</div>
                 <div class="text-[10px] text-slate-500">${item.duration || 0} دقيقة</div>
             </div>
         </a>
@@ -238,9 +238,8 @@ function markLessonComplete() {
     }
 
     showToast("تم تسجيل الحصة كمكتملة", "success");
-    const stats = ES_Storage.getStats();
-    if (!stats.completedLessons) stats.completedLessons = 0;
-    stats.completedLessons++;
-    ES_Storage.saveStats(stats);
+    const stats2 = ES_Storage.getStats() || {};
+    stats2.completedLessons = (Number(stats2.completedLessons) || 0) + 1;
+    ES_Storage.saveStats(stats2);
     renderLessonPage();
 }

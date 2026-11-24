@@ -24,7 +24,7 @@ const UI = {
                         </div>
                         <div>
                             <span class="text-base font-black tracking-widest text-slate-100 font-sci-fi group-hover:text-cyan-400 transition-colors hologram-glow">E-SENTRY</span>
-                            <span class="text-[9px] text-cyan-400 block font-mono font-semibold tracking-wider">SYS.2050 // SECURE</span>
+                            <span class="text-[9px] text-cyan-400 block font-mono font-semibold tracking-wider">DEMO PLATFORM</span>
                         </div>
                     </a>
                     <button type="button" id="sidebar-close" class="md:hidden text-cyan-400 hover:text-white">
@@ -37,7 +37,7 @@ const UI = {
                             (item) => `
                         <a href="${item.link}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ${currentPage === item.link ? "bg-cyan-500/15 text-cyan-300 border border-cyan-500/50 font-bold shadow-[0_0_25px_rgba(0,243,255,0.2)] translate-x-1.5" : "text-slate-400 hover:text-slate-100 hover:bg-slate-900/80 hover:border-cyan-500/30 border border-transparent font-medium"} text-xs">
                             <i class="fas ${item.icon} text-base w-5 text-center ${currentPage === item.link ? 'text-cyan-400 hologram-glow' : 'text-slate-500'}"></i>
-                            <span>${item.name}</span>
+                            <span>${ESSec.esc(item.name)}</span>
                         </a>
                     `
                         )

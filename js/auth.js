@@ -167,11 +167,11 @@ function getAdminLoginFormHtml() {
     `;
 }
 
-function handleAdminLoginSubmit(e) {
+async function handleAdminLoginSubmit(e) {
     e.preventDefault();
     const pass = document.getElementById("admin-login-pass").value;
-    const adminPass = localStorage.getItem("esentry_admin_pass") || "esentry_admin";
-    if (pass === adminPass) {
+    const chk = await ESSec.adminCheck(pass);
+    if (chk.ok) {
         localStorage.setItem("esentry_role", "admin");
         localStorage.setItem("esentry_user_role", "admin");
         localStorage.setItem("isLoggedIn", "true");
@@ -184,7 +184,7 @@ function handleAdminLoginSubmit(e) {
         showToast("تم التحقق من صلاحيات المشرف بنجاح 🛡️", "success");
         setTimeout(() => { window.location.href = "admin.html"; }, 700);
     } else {
-        showToast("كلمة المرور الإدارية غير صحيحة", "warning");
+        showToast(chk.msg, "warning");
     }
 }
 
@@ -295,7 +295,7 @@ function selectAvatar(el) {
     selectedAvatarUrl = el.src;
 }
 
-function handleLoginSubmit(e) {
+async function handleLoginSubmit(e) {
     e.preventDefault();
     const email = document.getElementById("login-email").value.trim();
     const password = document.getElementById("login-password").value;
@@ -315,22 +315,19 @@ function handleLoginSubmit(e) {
         }
     } catch (err) {}
 
-    if (stats && stats.password) {
+    const wait = ESSec.throttle("student:" + email.toLowerCase());
+    if (wait) { showToast("محاولات كثيرة. حاول بعد " + wait + " ثانية", "warning"); return; }
+    if (stats && stats.passwordHash) {
+        valid = await ESSec.verifyPassword(password, stats.passwordHash);
+    } else if (stats && stats.password) {
+        // legacy plain-text record: verify once, then upgrade to a hash and drop the plain text
         if (stats.password === password) {
             valid = true;
-        }
-    } else {
-        const globalStats = localStorage.getItem("esentry_stats");
-        if (globalStats) {
-            try {
-                const parsed = JSON.parse(globalStats);
-                if (parsed.email === email && (parsed.password === password || !parsed.password)) {
-                    stats = parsed;
-                    valid = true;
-                }
-            } catch (err) {}
+            stats.passwordHash = await ESSec.hashPassword(password);
+            delete stats.password;
         }
     }
+    if (valid) ESSec.clearFail("student:" + email.toLowerCase()); else ESSec.recordFail("student:" + email.toLowerCase());
 
     if (stats && stats.banned === true) {
         showToast("عذراً، هذا الحساب محظور أو تم إلغاء تفعيله من قبل المشرف 🚫", "warning");
@@ -356,7 +353,7 @@ function handleLoginSubmit(e) {
     setTimeout(() => { window.location.href = "index.html"; }, 700);
 }
 
-function handleRegisterSubmit(e) {
+async function handleRegisterSubmit(e) {
     e.preventDefault();
     const name = document.getElementById("reg-name").value.trim();
     const email = document.getElementById("reg-email").value.trim();
@@ -371,8 +368,8 @@ function handleRegisterSubmit(e) {
         showToast("يرجى إدخال الاسم الرباعي كاملاً (4 مقاطع)", "warning");
         return;
     }
-    if (password.length < 6) {
-        showToast("كلمة المرور يجب ألا تقل عن 6 رموز", "warning");
+    if (password.length < 8) {
+        showToast("كلمة المرور يجب ألا تقل عن 8 رموز", "warning");
         return;
     }
 
@@ -387,7 +384,8 @@ function handleRegisterSubmit(e) {
     const stats = ES_Storage.getStats() || {};
     stats.name = name;
     stats.email = email;
-    stats.password = password;
+    stats.passwordHash = await ESSec.hashPassword(password);
+    delete stats.password;
     stats.level = level;
     stats.role = "student";
     stats.avatar = "";

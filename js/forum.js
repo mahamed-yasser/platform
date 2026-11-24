@@ -119,14 +119,14 @@ function renderQuestionsList() {
                 <!-- Post Author Header -->
                 <div class="flex items-center justify-between gap-3">
                     <div class="flex items-center gap-3">
-                        <img src="${post.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop'}" class="w-9 h-9 rounded-xl object-cover border border-slate-700 shrink-0">
+                        <img src="${ESSec.esc(post.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop')}" class="w-9 h-9 rounded-xl object-cover border border-slate-700 shrink-0">
                         <div>
-                            <span class="text-xs font-bold text-slate-200 block">${post.author}</span>
+                            <span class="text-xs font-bold text-slate-200 block">${ESSec.esc(post.author)}</span>
                             <span class="text-[10px] text-slate-500 block mt-0.5">${post.createdAt || 'منذ فترة'}</span>
                         </div>
                     </div>
                     <span class="text-[10px] font-semibold text-emerald-400 bg-emerald-950/40 px-2.5 py-1 rounded-lg border border-emerald-500/10">
-                        ${post.category}
+                        ${ESSec.esc(post.category)}
                     </span>
                 </div>
                     <!-- Delete Button (Only for author) -->
@@ -139,8 +139,8 @@ function renderQuestionsList() {
 
                 <!-- Post Content -->
                 <div class="space-y-2">
-                    <h3 class="text-sm font-bold text-slate-100 leading-relaxed">${post.title}</h3>
-                    <p class="text-xs text-slate-300 leading-relaxed whitespace-pre-line">${post.content}</p>
+                    <h3 class="text-sm font-bold text-slate-100 leading-relaxed">${ESSec.esc(post.title)}</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed whitespace-pre-line">${ESSec.esc(post.content)}</p>
                 </div>
 
                 <!-- Action Bar -->
@@ -163,10 +163,10 @@ function renderQuestionsList() {
                                 <img src="${ans.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop'}" class="w-7 h-7 rounded-lg object-cover border border-slate-700 shrink-0">
                                 <div class="min-w-0 flex-1">
                                     <div class="flex items-center justify-between gap-2">
-                                        <span class="text-xs font-bold text-slate-300">${ans.author}</span>
+                                        <span class="text-xs font-bold text-slate-300">${ESSec.esc(ans.author)}</span>
                                         <span class="text-[9px] text-slate-500">${ans.createdAt || 'الآن'}</span>
                                     </div>
-                                    <p class="text-xs text-slate-300 mt-1 leading-relaxed">${ans.content}</p>
+                                    <p class="text-xs text-slate-300 mt-1 leading-relaxed">${ESSec.esc(ans.content)}</p>
                                 </div>
                             </div>
                         `).join("")}
@@ -289,8 +289,8 @@ function renderAdminDashboard() {
             ${pendingPosts.map(post => `
                 <div class="p-4 bg-slate-800 rounded-lg flex justify-between items-center">
                     <div>
-                        <p class="text-sm font-bold text-slate-100">${post.title}</p>
-                        <p class="text-xs text-slate-400">بواسطة: ${post.author}</p>
+                        <p class="text-sm font-bold text-slate-100">${ESSec.esc(post.title)}</p>
+                        <p class="text-xs text-slate-400">بواسطة: ${ESSec.esc(post.author)}</p>
                     </div>
                     <div class="flex gap-2">
                         <button onclick="approvePost('${post.id}')" class="px-3 py-1 bg-emerald-600 text-white text-xs rounded">موافقة</button>

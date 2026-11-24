@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl" class="dark">
 <head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Sentry | لوحة تحكم المشرف المتقدمة</title>
+    <script src="js/security.js"></script>
     <script src="js/auth.js"></script>
+    <script src="js/api-auth.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
@@ -25,7 +28,7 @@
                 <label class="block text-xs font-bold text-slate-300 mb-2">كلمة المرور الإدارية</label>
                 <div class="relative">
                     <i class="fas fa-lock absolute right-3.5 top-3.5 text-slate-500 text-xs"></i>
-                    <input type="password" id="admin-pass" placeholder="أدخل كلمة المرور (افتراضي: admin123)" required class="w-full bg-slate-950 border border-slate-800 rounded-xl pr-9 pl-9 py-3 text-xs text-slate-100 outline-none focus:border-emerald-500">
+                    <input type="password" id="admin-pass" placeholder="كلمة مرور المشرف (أول دخول: اختر كلمة من 10 رموز)" required class="w-full bg-slate-950 border border-slate-800 rounded-xl pr-9 pl-9 py-3 text-xs text-slate-100 outline-none focus:border-emerald-500">
                     <button type="button" onclick="togglePasswordVisibility('admin-pass', 'admin-pass-icon')" class="absolute left-3.5 top-3.5 text-slate-500 hover:text-slate-300 focus:outline-none transition-colors">
                         <i id="admin-pass-icon" class="fas fa-eye text-xs"></i>
                     </button>
@@ -49,7 +52,7 @@
                 </div>
                 <div>
                     <h1 class="text-sm font-black text-slate-100">E-SENTRY // ADMIN CONSOLE</h1>
-                    <span class="text-[9px] text-emerald-400 font-mono">SECURE SYSTEM v2.5</span>
+                    <span class="text-[9px] text-emerald-400 font-mono">ADMIN DEMO</span>
                 </div>
             </div>
             <div class="flex items-center gap-3">
@@ -94,7 +97,7 @@
                 <div class="glass-panel p-5 rounded-2xl border border-slate-800 flex items-center justify-between">
                     <div>
                         <span class="text-xs text-slate-400 block mb-1">حالة النظام</span>
-                        <span class="text-lg font-black text-emerald-400">مستقر (Secure)</span>
+                        <span class="text-lg font-black text-emerald-400">مستقر (عرض تجريبي)</span>
                     </div>
                     <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 text-lg animate-pulse">
                         <i class="fas fa-shield-check"></i>

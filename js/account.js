@@ -39,7 +39,7 @@ function getLeftProfileCardHtml(stats) {
                 ${getUserAvatarHtml(stats, "w-24 h-24 rounded-2xl object-cover border-2 border-slate-700 mx-auto shadow-xl")}
             </div>
             <div>
-                <h2 class="text-lg font-black text-slate-100">${stats.name}</h2>
+                <h2 class="text-lg font-black text-slate-100">${ESSec.esc(stats.name)}</h2>
                 ${!isAdmin ? `<span class="text-[10px] text-emerald-400 font-bold mt-1 bg-emerald-950/40 px-3 py-1 rounded-full inline-block">${stats.rank || "متميز"}</span>` : ""}
                 <p class="text-xs text-slate-400 mt-2">${stats.level}</p>
                 <p class="text-xs text-slate-500 mt-1">${stats.email}</p>
@@ -113,13 +113,13 @@ function getPasswordCardHtml() {
     `;
 }
 
-function savePasswordChanges(e) {
+async function savePasswordChanges(e) {
     e.preventDefault();
     const newPass = document.getElementById("account-new-pass").value;
     const confirmPass = document.getElementById("account-confirm-pass").value;
 
-    if (newPass.length < 6) {
-        showToast("كلمة المرور الجديدة يجب ألا تقل عن 6 رموز", "warning");
+    if (newPass.length < 8) {
+        showToast("كلمة المرور الجديدة يجب ألا تقل عن 8 رموز", "warning");
         return;
     }
     if (newPass !== confirmPass) {
@@ -128,7 +128,8 @@ function savePasswordChanges(e) {
     }
 
     const stats = ES_Storage.getStats() || {};
-    stats.password = newPass;
+    stats.passwordHash = await ESSec.hashPassword(newPass);
+    delete stats.password;
     ES_Storage.saveStats(stats);
     showToast("تم تحديث كلمة المرور بنجاح 🔒", "success");
 }
@@ -193,7 +194,7 @@ function openCertificateModal() {
                 <p class="text-xs text-slate-400 mt-1">تشهد أكاديمية إي-سنتري للأمن السيبراني بأن المتدرب:</p>
             </div>
             <div class="py-4 border-y border-slate-800">
-                <h3 class="text-2xl font-black text-emerald-400 hologram-glow-green">${stats.name || "الطالب"}</h3>
+                <h3 class="text-2xl font-black text-emerald-400 hologram-glow-green">${ESSec.esc(stats.name) || "الطالب"}</h3>
                 <p class="text-xs text-slate-300 mt-2">قد أكمل بنجاح متطلبات واجتياز مسار: <strong class="text-slate-100">${stats.level || "علوم الحاسب وأمن المعلومات"}</strong></p>
                 <p class="text-xs text-cyan-400 mt-1">بمعدل عام تراكمي قدره: <strong class="text-cyan-300">${stats.averageGrade || 95}%</strong> وساعات تعلم فعلية معتمدة.</p>
             </div>

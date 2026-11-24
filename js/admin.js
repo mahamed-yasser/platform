@@ -34,11 +34,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const loginForm = document.getElementById("login-form");
     if (loginForm) {
-        loginForm.addEventListener("submit", (e) => {
+        loginForm.addEventListener("submit", async (e) => {
             e.preventDefault();
             const pass = document.getElementById("admin-pass").value;
-            const adminPass = localStorage.getItem("esentry_admin_pass") || "esentry_admin";
-            if (pass === adminPass) {
+            const chk = await ESSec.adminCheck(pass);
+            if (chk.ok) {
                 localStorage.setItem("esentry_role", "admin");
                 localStorage.setItem("esentry_user_role", "admin");
                 document.getElementById("admin-login").classList.add("hidden");
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 initAdminDashboard();
                 showToast("تم تسجيل الدخول بنجاح إلى لوحة المشرف", "success");
             } else {
-                showToast("كلمة المرور الإدارية غير صحيحة", "warning");
+                showToast(chk.msg, "warning");
             }
         });
     }
@@ -167,9 +167,9 @@ function renderForumPending() {
         <div class="p-5 bg-slate-950 rounded-2xl border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
                 <span class="text-[10px] text-cyan-400 bg-cyan-950/40 px-2.5 py-1 rounded-full border border-cyan-500/20 font-bold">${p.category || 'عام'}</span>
-                <h4 class="text-sm font-bold text-slate-100 mt-2">${p.title}</h4>
-                <p class="text-xs text-slate-400 mt-1 line-clamp-2">${p.content}</p>
-                <span class="text-[10px] text-slate-500 block mt-2">بواسطة: ${p.author} (${p.authorEmail})</span>
+                <h4 class="text-sm font-bold text-slate-100 mt-2">${ESSec.esc(p.title)}</h4>
+                <p class="text-xs text-slate-400 mt-1 line-clamp-2">${ESSec.esc(p.content)}</p>
+                <span class="text-[10px] text-slate-500 block mt-2">بواسطة: ${ESSec.esc(p.author)} (${ESSec.esc(p.authorEmail)})</span>
             </div>
             <div class="flex items-center gap-2 shrink-0">
                 <button type="button" onclick="approvePost('${p.id}')" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-slate-950 text-xs font-bold rounded-xl transition-all">قبول ونشر</button>
@@ -210,7 +210,7 @@ function renderAdminLessonsList() {
     container.innerHTML = lessons.map(l => `
         <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 flex items-center justify-between gap-3">
             <div class="min-w-0 flex-1">
-                <h5 class="text-xs font-bold text-slate-200 truncate">${l.title}</h5>
+                <h5 class="text-xs font-bold text-slate-200 truncate">${ESSec.esc(l.title)}</h5>
                 <span class="text-[10px] text-emerald-400">${l.unit} • ${l.duration} دقيقة</span>
             </div>
             <button type="button" onclick="deleteAdminLesson('${l.id}')" class="w-8 h-8 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 flex items-center justify-center text-xs transition-colors">
@@ -275,11 +275,11 @@ function renderStudentsTable(filterText = "") {
                 <td class="p-4">
                     <div class="flex items-center gap-3">
                         <div class="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs shrink-0">
-                            ${(st.name || st.email || 'U').charAt(0).toUpperCase()}
+                            ${ESSec.esc((st.name || st.email || 'U').charAt(0).toUpperCase())}
                         </div>
                         <div>
-                            <span class="text-xs font-bold text-slate-200 block">${st.name || 'بدون اسم'}</span>
-                            <span class="text-[10px] text-slate-400 font-mono">${st.email || ''}</span>
+                            <span class="text-xs font-bold text-slate-200 block">${ESSec.esc(st.name) || 'بدون اسم'}</span>
+                            <span class="text-[10px] text-slate-400 font-mono">${ESSec.esc(st.email)}</span>
                         </div>
                     </div>
                 </td>
@@ -311,7 +311,7 @@ function renderStudentsTable(filterText = "") {
                         <button type="button" onclick="openStudentEditModal('${s.key}')" class="px-3 py-1.5 bg-cyan-600/20 hover:bg-cyan-600/30 text-cyan-400 border border-cyan-500/30 rounded-xl text-[11px] font-bold transition-all flex items-center gap-1" title="تعديل الحصص والتقدم">
                             <i class="fas fa-edit"></i> تعديل
                         </button>
-                        <button type="button" onclick="sendTargetedNotificationModal('${st.email}')" class="px-3 py-1.5 bg-amber-600/20 hover:bg-amber-600/30 text-amber-400 border border-amber-500/30 rounded-xl text-[11px] font-bold transition-all flex items-center gap-1" title="إرسال إشعار مخصص">
+                        <button type="button" onclick="sendTargetedNotificationModal('${ESSec.esc(st.email)}')" class="px-3 py-1.5 bg-amber-600/20 hover:bg-amber-600/30 text-amber-400 border border-amber-500/30 rounded-xl text-[11px] font-bold transition-all flex items-center gap-1" title="إرسال إشعار مخصص">
                             <i class="fas fa-bell"></i> إشعار
                         </button>
                         ${!isRoleAdmin ? `
@@ -368,14 +368,14 @@ function openStudentEditModal(key) {
             <div class="p-6 bg-slate-950 rounded-3xl border border-cyan-500/30 space-y-4 shadow-xl mb-6">
                 <div class="flex items-center justify-between border-b border-slate-800 pb-3">
                     <span class="text-xs font-bold text-cyan-400 flex items-center gap-2">
-                        <i class="fas fa-user-pen"></i> تعديل بيانات الحصص والتقدم للطالب: ${stats.name || stats.email}
+                        <i class="fas fa-user-pen"></i> تعديل بيانات الحصص والتقدم للطالب: ${ESSec.esc(stats.name || stats.email)}
                     </span>
                     <button type="button" onclick="document.getElementById('student-result').innerHTML=''" class="text-slate-400 hover:text-slate-100 text-xs"><i class="fas fa-xmark"></i></button>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
                         <label class="block text-[10px] text-slate-400 mb-1">اسم الطالب الكامل</label>
-                        <input type="text" id="edit-name" value="${stats.name || ''}" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-100 outline-none focus:border-cyan-500">
+                        <input type="text" id="edit-name" value="${ESSec.esc(stats.name)}" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-100 outline-none focus:border-cyan-500">
                     </div>
                     <div>
                         <label class="block text-[10px] text-slate-400 mb-1">المستوى أو المسار التدريبي</label>
@@ -525,7 +525,7 @@ function renderAdminCoursesList() {
     
     container.innerHTML = courses.map(c => `
         <div class="flex items-center justify-between p-3 bg-slate-950 border border-slate-800 rounded-xl">
-            <span class="text-xs text-slate-200">${c.title}</span>
+            <span class="text-xs text-slate-200">${ESSec.esc(c.title)}</span>
             <button onclick="deleteCourse('${c.id}')" class="text-rose-400 hover:text-rose-300 text-xs"><i class="fas fa-trash"></i></button>
         </div>
     `).join("");
@@ -538,7 +538,7 @@ function renderAdminBuilderLessonsList() {
     
     container.innerHTML = lessons.map(l => `
         <div class="flex items-center justify-between p-3 bg-slate-950 border border-slate-800 rounded-xl">
-            <span class="text-xs text-slate-200">${l.title}</span>
+            <span class="text-xs text-slate-200">${ESSec.esc(l.title)}</span>
             <button onclick="deleteLesson('${l.id}')" class="text-rose-400 hover:text-rose-300 text-xs"><i class="fas fa-trash"></i></button>
         </div>
     `).join("");
@@ -564,7 +564,7 @@ function populateCourseDropdown() {
     const courses = JSON.parse(localStorage.getItem("esentry_courses") || "[]");
     const select = document.getElementById("builder-lesson-course");
     if (!select) return;
-    select.innerHTML = courses.map(c => `<option value="${c.id}">${c.title}</option>`).join("");
+    select.innerHTML = courses.map(c => `<option value="${ESSec.esc(c.id)}">${ESSec.esc(c.title)}</option>`).join("");
 }
 
 

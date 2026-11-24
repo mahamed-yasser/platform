@@ -40,7 +40,7 @@ function renderCoursesList() {
                 <div class="flex flex-col">
                     <!-- 1. صورة الكورس في أعلى البطاقة بحجم وتنسيق متناسق -->
                     <div class="relative w-full h-48 sm:h-52 overflow-hidden bg-slate-950 shrink-0">
-                        <img src="${course.image || 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b'}" alt="${course.title}" onerror="this.src='https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=800&auto=format&fit=crop'" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500">
+                        <img src="${course.image || 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b'}" alt="${ESSec.esc(course.title)}" onerror="this.src='https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=800&auto=format&fit=crop'" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none"></div>
                         <div class="absolute top-3 right-3 bg-slate-950/85 backdrop-blur-md px-3.5 py-1.5 rounded-full text-[10px] font-bold text-emerald-400 border border-slate-800/80 shadow-md flex items-center gap-1.5">
                             <i class="fas fa-clock text-emerald-400"></i> ${course.duration || '10 ساعات'}
@@ -50,7 +50,7 @@ function renderCoursesList() {
                     <!-- 2. محتوى البطاقة بترتيب: العنوان، الوصف، المحاضر، ونسبة الإنجاز -->
                     <div class="p-5 flex flex-col gap-3.5">
                         <!-- العنوان -->
-                        <h2 class="text-base sm:text-lg font-bold text-slate-100 leading-snug line-clamp-2 group-hover:text-emerald-400 transition-colors">${course.title}</h2>
+                        <h2 class="text-base sm:text-lg font-bold text-slate-100 leading-snug line-clamp-2 group-hover:text-emerald-400 transition-colors">${ESSec.esc(course.title)}</h2>
                         
                         <!-- الوصف -->
                         <p class="text-xs sm:text-sm text-slate-400 leading-relaxed line-clamp-2">${course.description}</p>

@@ -45,7 +45,7 @@ function renderCourseView() {
         container.innerHTML = units.map((unit) => `
             <div class="mb-6 bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
                 <div class="p-4 bg-slate-800/50 border-b border-slate-800 font-bold text-sm text-emerald-400">
-                    ${unit.title}
+                    ${ESSec.esc(unit.title)}
                 </div>
                 <div class="divide-y divide-slate-800">
                     ${unit.lessons.map(lesson => `
@@ -54,7 +54,7 @@ function renderCourseView() {
                                 <i class="fas ${lesson.completed ? 'fa-check' : 'fa-play'} text-xs"></i>
                             </div>
                             <div class="mr-4">
-                                <h4 class="text-sm font-medium">${lesson.title}</h4>
+                                <h4 class="text-sm font-medium">${ESSec.esc(lesson.title)}</h4>
                                 <span class="text-[10px] text-slate-500">${lesson.duration} دقيقة</span>
                             </div>
                         </a>

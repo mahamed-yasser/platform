@@ -6,7 +6,7 @@
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-Active-success?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Demo-orange?style=for-the-badge)
 
 **منصة تعليمية تفاعلية ذكية - E-Sentry Academy**
 
@@ -211,3 +211,18 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 Made with ❤️ by [Mahamed Yasser](https://github.com/mahamedwow1-afk)
 
 </div>
+
+
+---
+
+## 🔐 Security notes (read before using)
+
+This is a **static front-end demo**. Accounts, courses, forum posts and grades are stored in the browser (`localStorage`). There is no server, so it must **not** be used with real student data as-is.
+
+What the demo does:
+- No default admin password in the source. The first admin sign-in in a browser sets the password (10+ characters), kept as a salted PBKDF2-SHA256 hash.
+- Student passwords are stored as salted PBKDF2 hashes (old plain-text records are upgraded on next login).
+- Forum, account and admin views escape user-supplied text (stored-XSS tested with payloads in title, content, category, author, avatar and replies).
+- Client-side login throttling (5 failures, 30 s) and a Content-Security-Policy meta tag.
+
+What it cannot do (needs a real backend): server-side authentication and authorization, rate limiting that an attacker cannot reset, encrypted storage, audit logs, backups. Anyone with browser dev tools can edit local data.
