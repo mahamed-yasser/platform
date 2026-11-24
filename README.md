@@ -9,10 +9,9 @@ _Screenshot of the forum in server mode (local run)._
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript)
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3)
-![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 ![Status](https://img.shields.io/badge/Status-Demo-orange?style=for-the-badge)
 
-**منصة تعليمية تفاعلية ذكية - E-Sentry Academy**
+**منصة تعليمية تجريبية - E-Sentry Academy (نموذج / demo)**
 
 [🚀 Live Demo](#-demo) • [📖 Installation](#-installation) • [⚙️ Features](#-features) • [🤝 Contributing](#-contributing)
 
@@ -25,7 +24,7 @@ _Screenshot of the forum in server mode (local run)._
 E-Sentry Academy هي منصة تعليمية تفاعلية مصممة للطلاب والمعلمين. توفر المنصة تجربة تعليمية متكاملة تشمل:
 
 - 📚 **إدارة الدورات**: إنشاء وإدارة الدورات التعليمية بسهولة
-- 📝 **الاختبارات الذكية**: نظام اختبارات متكامل مع تصحيح تلقائي
+- 📝 **الاختبارات**: نظام اختبارات متكامل مع تصحيح تلقائي
 - 💬 **المنتديات**: تفاعل بين الطلاب والمعلمين
 - 📊 **لوحة تحكم**: متابعة أداء الطلاب والإحصائيات
 
@@ -35,27 +34,20 @@ E-Sentry Academy هي منصة تعليمية تفاعلية مصممة للطل
 
 | Feature | Description |
 |---------|-------------|
-| 🏠 **Dashboard** | لوحة تحكم تفاعلية مع إحصائيات حية |
+| 🏠 **Dashboard** | لوحة تحكم تفاعلية مع إحصائيات من بيانات الجلسة المحلية |
 | 📚 **Courses** | إدارة الدورات والدروس بشكل كامل |
 | 📝 **Exams** | نظام اختبارات مع أسئلة متعددة الخيارات |
 | 💬 **Forum** | منتدى نقاش للطلاب والمعلمين |
-| 👤 **User Roles** | صلاحيات مختلفة (طالب، معلم، مدير) |
-| 🔔 **Notifications** | نظام إشعارات فوري |
-| 🌙 **Dark Mode** | دعم الوضع الليلي |
+| 👤 **User Roles** | دوران: طالب ومدير (لا يوجد دور معلم) |
+| 🔔 **Notices** | رسائل تنبيه داخل الصفحة (لا يوجد إشعارات push) |
+| 🌙 **Dark theme** | التصميم داكن فقط، لا يوجد زر تبديل |
 | 📱 **Responsive** | متوافق مع جميع الأجهزة |
 
 ---
 
 ## 📸 Screenshots
 
-### Dashboard
-![Dashboard](https://via.placeholder.com/1200x600/010308/00f3ff?text=E-Sentry+Academy+Dashboard)
-
-### Courses Page
-![Courses](https://via.placeholder.com/1200x600/0f172a/38bdf8?text=Course+Management)
-
-### Exams System
-![Exams](https://via.placeholder.com/1200x600/1e1b4b/a78bfa?text=Exam+Interface)
+The screenshot at the top is the only image, taken from a local server-mode run. Other pages were not re-captured.
 
 ---
 
@@ -167,19 +159,7 @@ Edit `manifest.json` for PWA settings:
 
 ## 🧪 Testing
 
-```bash
-# Test HTML validation
-npm install -g html-validate
-html-validate *.html
-
-# Test CSS
-npm install -g stylelint
-stylelint css/*.css
-
-# Test JavaScript
-npm install -g eslint
-eslint js/*.js
-```
+The server prototype has its own test scripts in `server/` (see `server/README.md` for how to run them). The static pages have no automated tests.
 
 ---
 
@@ -197,8 +177,7 @@ Contributions are welcome! Please follow these steps:
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
+No license file is included yet.
 ---
 
 ## 👨‍💻 Author
